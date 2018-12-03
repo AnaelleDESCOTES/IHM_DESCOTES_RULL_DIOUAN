@@ -4,13 +4,84 @@ import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Adresse} from './dataInterfaces/adresse';
 import {InfirmierInterface} from './dataInterfaces/infirmier';
 import {PatientInterface} from './dataInterfaces/patient';
+import {sexeEnum} from './dataInterfaces/sexe';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CabinetMedicalService {
 
-  constructor(private _http: HttpClient) { }
+  private cab: CabinetInterface;
+
+  constructor(private _http: HttpClient) {
+    this.getCabinet();
+    console.log(this.cab);
+  }
+  get cabinet(): CabinetInterface {
+    return this.cab;
+  }
+  private async getCabinet() {
+    this.cab = await this.getData('/data/cabinetInfirmier.xml');
+  }
+
+  async affecterPatient(i: string, p: PatientInterface) {
+    let inf: InfirmierInterface;
+    this.cab.infirmiers.forEach((e) => {
+        if (e.id === i) {
+          inf = e;
+        }
+    });
+    inf.patients.push(p);
+    this.cabinet.patientsNonAffectés = this.patientsNonAffectes.filter( pat => p !== pat );
+  }
+
+  public creerPatient(prenom: string, nom: string, sexe: sexeEnum, etage: string, numero: string, rue: string, ville: string, codePostal: number, securiteSocial: string ) {
+    const p: PatientInterface = {
+        prénom: '',
+        nom: '',
+        sexe: sexeEnum.M ,
+        adresse: {
+        étage: '',
+        codePostal: 0,
+        numéro: '',
+        rue: '',
+        ville: '',
+      },
+      numéroSécuritéSociale: ''
+    };
+    p.prénom = prenom ;
+    p.nom = nom;
+    p.sexe = sexe;
+    p.adresse.étage = etage;
+    p.adresse.numéro = numero;
+    p.adresse.rue = rue;
+    p.adresse.ville = ville;
+    p.adresse.codePostal = codePostal;
+    p.numéroSécuritéSociale = securiteSocial;
+    this.addPatient(p);
+  }
+
+
+  public async addPatient(patient: PatientInterface): Promise<PatientInterface> {
+    const res = await this._http.post('/addPatient', {
+      patientName: patient.nom,
+      patientForname: patient.prénom,
+      patientNumber: patient.numéroSécuritéSociale,
+      patientSex: patient.sexe === sexeEnum.M ? 'M' : 'F',
+      patientFloor: patient.adresse.étage,
+      patientStreetNumber: patient.adresse.numéro,
+      patientStreet: patient.adresse.rue,
+      patientPostalCode: patient.adresse.codePostal,
+      patientCity: patient.adresse.ville
+    }, {observe: 'response'}).toPromise<HttpResponse<any>>();
+
+    console.log('Add patient renvoie', res);
+    if (res.status === 200) {
+      // OK on peut ajouter en local
+      this.cab.patientsNonAffectés.push( patient );
+    }
+    return null;
+  }
 
   private getAdresseFrom(adXML: Element): Adresse {
     let n;
@@ -82,5 +153,15 @@ export class CabinetMedicalService {
     }
     return cab;
   }
+
+  get patientsNonAffectes(): PatientInterface[] {
+    return this.cab ? this.cab.patientsNonAffectés : [];
+  }
+
+  get infirmiers(): InfirmierInterface[] {
+    return this.cab ? this.cab.infirmiers : [];
+  }
+
+
 
 }
