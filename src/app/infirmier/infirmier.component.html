@@ -1,0 +1,20 @@
+<td width="100">
+ <img src="../../../L3M-Projet/data/data.photo" border="1" align="center">
+</td>
+<td width="100">
+  {{data.nom}}
+</td>
+<td width="100">
+  {{prenom}}
+</td>
+<td width="100">
+  {{adresse}}
+</td>
+<td width="100">
+  {{data.id}}
+</td>
+<td width="100">
+  <select>
+    <option *ngFor="let pat of data.patients" [value]="numeroSecuriteSociale(pat)"> {{pat.nom}}</option>
+  </select>
+</td>
