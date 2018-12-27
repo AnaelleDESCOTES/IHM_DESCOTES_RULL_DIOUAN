@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {CabinetMedicalService} from '../cabinet-medical.service';
 import {CabinetInterface} from '../dataInterfaces/cabinet';
 import {InfirmierInterface} from '../dataInterfaces/infirmier';
@@ -11,16 +11,19 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 @Component({
   selector: 'app-secretary',
   templateUrl: './secretary.component.html',
-  styleUrls: ['./secretary.component.scss']
+  styleUrls: [
+    './css/font-awesome.min.css',
+    './css/bootstrap.min.css',
+    './css/style.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SecretaryComponent implements OnInit {
 
   constructor(private cs: CabinetMedicalService) {
+
   }
 
-  affecterPatient(i: string, p: PatientInterface): any {
-     this.cs.affecterPatient(i, p);
-  }
+
 
   creerPatient(prenom: string, nom: string, sexe: sexeEnum, etage: string, numero: string, rue: string, ville: string, codePostal: number, securiteSocial: string ) {
     this.cs.creerPatient(prenom, nom, sexe, etage, numero, rue, ville, codePostal, securiteSocial);

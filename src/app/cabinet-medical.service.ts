@@ -35,6 +35,34 @@ export class CabinetMedicalService {
     this.cabinet.patientsNonAffectés = this.patientsNonAffectes.filter( pat => p !== pat );
   }
 
+  async desaffecterPatient(inf: InfirmierInterface, pat: string) {
+    let patient: PatientInterface;
+    // je cherche le patient dans la liste de infirmier grace au numéro de securité sociale
+    inf.patients.forEach( (p) => {
+      if (p.numéroSécuritéSociale === pat) {
+        patient = p;
+      }
+    });
+    // j'enleve le patient de la lsite de l'ancien infirmier
+    inf.patients.filter( p => p.numéroSécuritéSociale === pat );
+    // j'ajoute le patient à la liste des patietns non affectés
+    this.addPatient(patient);
+  }
+
+  async reaffecterPatient(ancien: InfirmierInterface, pat: string, nouveau: InfirmierInterface) {
+    let patient: PatientInterface;
+    // je cherche le patient dans la liste de lancien infirmier grace au numéro de securité sociale
+    ancien.patients.forEach(p => {
+      if (p.numéroSécuritéSociale === pat) {
+        patient = p;
+      }
+    });
+    // j'enleve le patient de la lsite de l'ancien infirmier
+    ancien.patients.filter( p => p.numéroSécuritéSociale === pat);
+    // je l'ajouter au nouveau
+    nouveau.patients.push(patient);
+  }
+
   public creerPatient(prenom: string, nom: string, sexe: sexeEnum, etage: string, numero: string, rue: string, ville: string, codePostal: number, securiteSocial: string ) {
     const p: PatientInterface = {
         prénom: '',
@@ -123,7 +151,7 @@ export class CabinetMedicalService {
           nom: patXML.querySelector('nom').textContent,
           prénom: patXML.querySelector('prénom').textContent,
           sexe: patXML.querySelector('sexe').textContent,
-          numéroSécuritéSociale: patXML.querySelector('numéro'),
+          numéroSécuritéSociale: patXML.querySelector('numéro').textContent,
           adresse: this.getAdresseFrom(patXML.querySelector('adresse'))
       }));
 

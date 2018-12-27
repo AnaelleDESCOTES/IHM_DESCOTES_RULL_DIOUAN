@@ -1,3 +1,5 @@
+
+
 <td width="100">
  <img src="../../../L3M-Projet/data/data.photo" border="1" align="center">
 </td>
@@ -14,7 +16,22 @@
   {{data.id}}
 </td>
 <td width="100">
-  <select>
+  <select #patient>
     <option *ngFor="let pat of data.patients" [value]="numeroSecuriteSociale(pat)"> {{pat.nom}}</option>
   </select>
+</td>
+<td width="100">
+  <input value="Desaffecter"
+         type="submit"
+         name="Desaffecter"
+         (click)="desaffecterPatient(data,patient.value)"/>
+</td>
+<td width="100">
+  <select #i>
+    <option *ngFor="let inf of cs.infirmiers" [value]="inf"> {{inf.nom}}</option>
+  </select>
+  <input value="Réaffecter"
+         type="submit"
+         name="Desaffecter"
+         (click)="reaffecterPatient(data, patient.value, i.value)"/>
 </td>

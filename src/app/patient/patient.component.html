@@ -1,15 +1,23 @@
-<td>
+<td align="center">
   {{data.nom}}
 </td>
-<td>
+<td align="center">
   {{prenom}}
 </td>
-<td>
-  {{data.sexe}}
-</td>
-<td>
+<td align="center">
   {{adresse}}
 </td>
-<td>
+<td align="center">
+  {{data.sexe}}
+</td>
+<td align="center">
   {{numeroSecuriteSociale}}
+</td>
+<td width="100" align="center" >
+  <select #inf>
+    <option *ngFor="let infirmier of infirmiers" [value]="infirmier.id"> {{infirmier.nom}} </option>
+  </select>
+  <input type="submit"
+         name="Affecter"
+         (click)="affecterPatient(inf.value,data)"/>
 </td>
