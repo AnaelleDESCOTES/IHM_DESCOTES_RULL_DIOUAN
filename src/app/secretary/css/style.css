@@ -34,6 +34,20 @@ h2 {
 }
 
 
+td{
+
+  text-align: center;
+
+}
+
+
+th{
+
+  text-align: center;
+
+}
+
+
 /*header area*/
 
 .top-header {

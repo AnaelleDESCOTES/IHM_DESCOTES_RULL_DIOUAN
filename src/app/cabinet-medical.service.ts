@@ -123,7 +123,7 @@ export class CabinetMedicalService {
           nom: patXML.querySelector('nom').textContent,
           prénom: patXML.querySelector('prénom').textContent,
           sexe: patXML.querySelector('sexe').textContent,
-          numéroSécuritéSociale: patXML.querySelector('numéro'),
+          numéroSécuritéSociale: patXML.querySelector('numéro').textContent,
           adresse: this.getAdresseFrom(patXML.querySelector('adresse'))
       }));
 
