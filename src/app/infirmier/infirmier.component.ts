@@ -6,7 +6,7 @@ import {PatientInterface} from '../dataInterfaces/patient';
 import {Adresse} from '../dataInterfaces/adresse';
 
 @Component({
-  selector: 'app-infirmier',
+  selector: '[app-infirmier]',
   templateUrl: './infirmier.component.html',
   styleUrls: ['./infirmier.component.scss']
 })

@@ -7,7 +7,7 @@ import {Adresse} from '../dataInterfaces/adresse';
 import {sexeEnum} from '../dataInterfaces/sexe';
 
 @Component({
-  selector: 'app-patient',
+  selector: '[app-patient]',
   templateUrl: './patient.component.html',
   styleUrls: ['./patient.component.scss']
 })
@@ -15,7 +15,7 @@ export class PatientComponent implements OnInit {
 
   @Input() data: PatientInterface;
 
-  constructor(cs: CabinetMedicalService) { }
+  constructor(private cs: CabinetMedicalService) { }
 
   get prenom(): string {
     return this.data.prénom;
@@ -38,8 +38,12 @@ export class PatientComponent implements OnInit {
   get numeroSecuriteSociale(): string {
     return this.data.numéroSécuritéSociale;
   }
-
-
+  get infirmiers(): InfirmierInterface[] {
+    return this.cs.infirmiers;
+  }
+  affecterPatient(i: string, p: PatientInterface): any {
+    this.cs.affecterPatient(i, p);
+  }
   ngOnInit() {
   }
 

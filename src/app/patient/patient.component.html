@@ -13,3 +13,11 @@
 <td>
   {{numeroSecuriteSociale}}
 </td>
+<td width="100" >
+  <select #inf>
+    <option *ngFor="let infirmier of infirmiers" [value]="infirmier.id"> {{infirmier.nom}} </option>
+  </select>
+  <input type="submit"
+         name="Affecter"
+         (click)="affecterPatient(inf.value,data)"/>
+</td>
