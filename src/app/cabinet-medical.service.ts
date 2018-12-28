@@ -74,7 +74,7 @@ export class CabinetMedicalService {
     nouveau.patients.push(patient);
   }
 
-    public creerPatient(prenom: string, nom: string, sexe: sexeEnum, etage: string, numero: string, rue: string, ville: string, codePostal: number, securiteSocial: string ) {
+  public creerPatient(prenom: string, nom: string, sexe: sexeEnum, etage: string, numero: string, rue: string, ville: string, codePostal: number, securiteSocial: string ) {
     const p: PatientInterface = {
         prénom: '',
         nom: '',
