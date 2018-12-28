@@ -1,19 +1,20 @@
-<td align="center">
+<td>
   {{data.nom}}
 </td>
-<td align="center">
+<td>
   {{prenom}}
 </td>
-<td align="center">
+<td>
   {{adresse}}
 </td>
-<td align="center">
+<td>
   {{data.sexe}}
 </td>
-<td align="center">
+
+<td>
   {{numeroSecuriteSociale}}
 </td>
-<td width="100" align="center" >
+<td width="100" >
   <select #inf>
     <option *ngFor="let infirmier of infirmiers" [value]="infirmier.id"> {{infirmier.nom}} </option>
   </select>

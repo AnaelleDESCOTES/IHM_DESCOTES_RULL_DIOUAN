@@ -45,11 +45,4 @@ export class InfirmierComponent implements OnInit {
   ngOnInit() {
   }
 
-  desaffecterPatient(i: InfirmierInterface, p: string): any {
-    this.cs.desaffecterPatient(i, p);
-  }
-  reaffecterPatient(ancien: InfirmierInterface, patient: string, nouveau: InfirmierInterface): any {
-    this.cs.reaffecterPatient(ancien, patient, nouveau);
-  }
-
 }

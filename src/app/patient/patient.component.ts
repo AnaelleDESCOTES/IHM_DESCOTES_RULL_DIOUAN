@@ -36,7 +36,6 @@ export class PatientComponent implements OnInit {
   }
 
   get numeroSecuriteSociale(): string {
-    console.log(this.data.numéroSécuritéSociale);
     return this.data.numéroSécuritéSociale;
   }
   get infirmiers(): InfirmierInterface[] {
