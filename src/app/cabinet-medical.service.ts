@@ -54,14 +54,24 @@ export class CabinetMedicalService {
         patient = p;
       }
     });
+    const res = await this._http.post( '/affectation', {
+        infirmier: 'none',
+        patient: patient.numéroSécuritéSociale
+  }, {observe: 'response'}).toPromise<HttpResponse<any>>();
     // j'enleve le patient de la lsite de l'ancien infirmier
-    inf.patients.filter( p => p.numéroSécuritéSociale === pat );
+    if (res.status === 200) {
+      // OK on peut ajouter en local
+      this.cabinet.patientsNonAffectés.push( patient );
+      inf.patients.filter( p => p.numéroSécuritéSociale === pat );
+    }
     // j'ajoute le patient à la liste des patietns non affectés
     this.addPatient(patient);
+    return null;
   }
 
-  async reaffecterPatient(ancien: InfirmierInterface, pat: string, nouveau: InfirmierInterface) {
+  async reaffecterPatient(ancien: InfirmierInterface, pat: string, nouveau: string) {
     let patient: PatientInterface;
+    let infirmier: InfirmierInterface;
     // je cherche le patient dans la liste de lancien infirmier grace au numéro de securité sociale
     ancien.patients.forEach(p => {
       if (p.numéroSécuritéSociale === pat) {
@@ -70,8 +80,20 @@ export class CabinetMedicalService {
     });
     // j'enleve le patient de la lsite de l'ancien infirmier
     ancien.patients.filter(p => p.numéroSécuritéSociale === pat);
-    // je l'ajouter au nouveau
-    nouveau.patients.push(patient);
+    // je l'ajoute au nouveau
+    this.infirmiers.forEach(i => {
+      if (i.id === nouveau) {
+        infirmier = i;
+      }
+    });
+    const res = await this._http.post('/affectation', {
+      infirmier: infirmier.id,
+      patient: patient.numéroSécuritéSociale
+    }, {observe: 'response'}).toPromise<HttpResponse<any>>();
+    if (res.status === 200) {
+      // OK on peut ajouter en local
+      infirmier.patients.push(patient);
+    }
   }
 
   public creerPatient(prenom: string, nom: string, sexe: sexeEnum, etage: string, numero: string, rue: string, ville: string, codePostal: number, securiteSocial: string ) {

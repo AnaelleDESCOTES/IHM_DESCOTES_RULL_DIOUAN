@@ -48,7 +48,7 @@ export class InfirmierComponent implements OnInit {
   desaffecterPatient(i: InfirmierInterface, p: string): any {
     this.cs.desaffecterPatient(i, p);
   }
-  reaffecterPatient(ancien: InfirmierInterface, patient: string, nouveau: InfirmierInterface): any {
+  reaffecterPatient(ancien: InfirmierInterface, patient: string, nouveau: string): any {
     this.cs.reaffecterPatient(ancien, patient, nouveau);
   }
 
