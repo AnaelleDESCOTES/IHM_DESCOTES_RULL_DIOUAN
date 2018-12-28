@@ -62,7 +62,8 @@ export class CabinetMedicalService {
     if (res.status === 200) {
       // OK on peut ajouter en local
       this.cabinet.patientsNonAffectés.push( patient );
-      inf.patients.filter( p => p.numéroSécuritéSociale === pat );
+      const index = inf.patients.indexOf(patient);
+      inf.patients.splice(index);
     }
     // j'ajoute le patient à la liste des patietns non affectés
     this.addPatient(patient);
@@ -79,7 +80,8 @@ export class CabinetMedicalService {
       }
     });
     // j'enleve le patient de la lsite de l'ancien infirmier
-    ancien.patients.filter(p => p.numéroSécuritéSociale === pat);
+    const index = ancien.patients.indexOf(patient);
+    ancien.patients.splice(index);
     // je l'ajoute au nouveau
     this.infirmiers.forEach(i => {
       if (i.id === nouveau) {
