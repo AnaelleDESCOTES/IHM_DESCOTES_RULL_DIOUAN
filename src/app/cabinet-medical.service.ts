@@ -61,12 +61,13 @@ export class CabinetMedicalService {
     // j'enleve le patient de la lsite de l'ancien infirmier
     if (res.status === 200) {
       // OK on peut ajouter en local
-      this.cabinet.patientsNonAffectés.push( patient );
+      //this.cabinet.patientsNonAffectés.push( patient );
+      this.addPatient(patient);
       const index = inf.patients.indexOf(patient);
-      inf.patients.splice(index);
+      inf.patients.splice(index, index + 1);
     }
     // j'ajoute le patient à la liste des patietns non affectés
-    this.addPatient(patient);
+
     return null;
   }
 
@@ -79,9 +80,7 @@ export class CabinetMedicalService {
         patient = p;
       }
     });
-    // j'enleve le patient de la lsite de l'ancien infirmier
-    const index = ancien.patients.indexOf(patient);
-    ancien.patients.splice(index);
+
     // je l'ajoute au nouveau
     this.infirmiers.forEach(i => {
       if (i.id === nouveau) {
@@ -94,6 +93,9 @@ export class CabinetMedicalService {
     }, {observe: 'response'}).toPromise<HttpResponse<any>>();
     if (res.status === 200) {
       // OK on peut ajouter en local
+      // j'enleve le patient de la lsite de l'ancien infirmier
+      const index = ancien.patients.indexOf(patient);
+      ancien.patients.splice(index, index + 1);
       infirmier.patients.push(patient);
     }
   }
