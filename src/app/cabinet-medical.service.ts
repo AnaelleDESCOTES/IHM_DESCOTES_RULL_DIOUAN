@@ -61,7 +61,6 @@ export class CabinetMedicalService {
     // j'enleve le patient de la lsite de l'ancien infirmier
     if (res.status === 200) {
       // OK on peut ajouter en local
-      //this.cabinet.patientsNonAffectés.push( patient );
       this.addPatient(patient);
       const index = inf.patients.indexOf(patient);
       inf.patients.splice(index, index + 1);
